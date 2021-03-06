@@ -13,8 +13,20 @@ public class FabricaConexao implements IMySQL {
 
         try {
             Class.forName(DRIVER_NAME);
-
             con = DriverManager.getConnection(URL, USUARIO, SENHA);
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println("Message: " + ex.getMessage());
+        }
+
+        return con;
+    }
+    
+    public static Connection getConexaoSchema() {
+        Connection con = null;
+
+        try {
+            Class.forName(DRIVER_NAME);
+            con = DriverManager.getConnection(URL_SCHEMA, USUARIO, SENHA);
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println("Message: " + ex.getMessage());
         }

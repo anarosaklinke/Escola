@@ -24,7 +24,6 @@ public class JDialogLogin extends javax.swing.JDialog {
         LoginService entity = ServiceFactory.getLoginService();
         
         entity.criarBancoDados();
-        System.err.println("criarBancoDados");
         
         int res;
 

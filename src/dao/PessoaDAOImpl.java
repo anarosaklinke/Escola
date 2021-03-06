@@ -18,7 +18,7 @@ public class PessoaDAOImpl implements PessoaDAO {
         Connection con = null;
         PreparedStatement pstm = null;
 
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
         if (con != null) {
             try {
                 con.setAutoCommit(false);
@@ -49,7 +49,7 @@ public class PessoaDAOImpl implements PessoaDAO {
         Connection con = null;
         PreparedStatement pstm = null;
 
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
         if (con != null) {
             try {
                 con.setAutoCommit(false);
@@ -79,7 +79,7 @@ public class PessoaDAOImpl implements PessoaDAO {
         PreparedStatement pstm = null;
         ResultSet res = null;
         Pessoa temp = new Pessoa(idpessoa);
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
 
         if (con != null) {
             try {
@@ -115,7 +115,7 @@ public class PessoaDAOImpl implements PessoaDAO {
         PreparedStatement pstm = null;
         ResultSet res = null;
         long temp = -1;
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
 
         if (con != null) {
             try {
@@ -145,7 +145,7 @@ public class PessoaDAOImpl implements PessoaDAO {
         PreparedStatement pstm = null;
         ResultSet res = null;
         List<Pessoa> temp = new ArrayList<Pessoa>();
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
         if (con != null) {
             try {
 
@@ -179,7 +179,7 @@ public class PessoaDAOImpl implements PessoaDAO {
         PreparedStatement pstm = null;
         ResultSet res = null;
         boolean temp = false;
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
 
         if (con != null) {
             try {
@@ -210,7 +210,7 @@ public class PessoaDAOImpl implements PessoaDAO {
         PreparedStatement pstm = null;
         ResultSet res = null;
         long temp = -1;
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
 
         if (con != null) {
             try {
@@ -241,7 +241,7 @@ public class PessoaDAOImpl implements PessoaDAO {
         Connection con = null;
         PreparedStatement pstm = null;
 
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
         if (con != null) {
             try {
 

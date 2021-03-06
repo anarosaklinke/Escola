@@ -58,12 +58,11 @@ public class LoginDAOImpl implements LoginDAO {
         Connection con = null;
         PreparedStatement pstm = null;
 
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
         if (con != null) {
             try {
 
                 con.setAutoCommit(false);
-
                 pstm = con.prepareStatement(INSERT_LOGIN);
                 pstm.setLong(1, login.getIdLogin());
                 pstm.setString(2, login.getUsuario());
@@ -87,12 +86,11 @@ public class LoginDAOImpl implements LoginDAO {
         Connection con = null;
         PreparedStatement pstm = null;
 
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
         if (con != null) {
             try {
 
                 con.setAutoCommit(false);
-
                 pstm = con.prepareStatement(UPDATE);
                 pstm.setString(1, login.getUsuario());
                 pstm.setString(2, login.getSenha());
@@ -115,11 +113,10 @@ public class LoginDAOImpl implements LoginDAO {
         PreparedStatement pstm = null;
         ResultSet res = null;
         long temp = -1;
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
 
         if (con != null) {
             try {
-
                 Statement stm = con.createStatement();
                 pstm = con.prepareStatement(RECUPERA_ID);
                 res = pstm.executeQuery();
@@ -146,7 +143,7 @@ public class LoginDAOImpl implements LoginDAO {
         ResultSet res = null;
 
         int resultado = 0;
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
         if (con != null) {
             try {
                 Statement stm = con.createStatement();
@@ -183,7 +180,7 @@ public class LoginDAOImpl implements LoginDAO {
         ResultSet res = null;
 
         String resultado = "Nao Encontrado";
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
         if (con != null) {
             try {
                 Statement stm = con.createStatement();
@@ -214,9 +211,9 @@ public class LoginDAOImpl implements LoginDAO {
         ResultSet res = null;
 
         long resultado = -1;
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
         if (con != null) {
-            try {
+            try {                
                 Statement stm = con.createStatement();
 
                 pstm = con.prepareStatement(IDLOGIN_USUARIO);
@@ -245,7 +242,7 @@ public class LoginDAOImpl implements LoginDAO {
         ResultSet res = null;
 
         boolean resultado = false;
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
         if (con != null) {
             try {
                 Statement stm = con.createStatement();
@@ -272,7 +269,7 @@ public class LoginDAOImpl implements LoginDAO {
         Connection con = null;
         PreparedStatement pstm = null;
 
-        con = FabricaConexao.getConexao();
+        con = FabricaConexao.getConexaoSchema();
         if (con != null) {
             try {
 
