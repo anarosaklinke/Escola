@@ -135,14 +135,18 @@ public class Sistema extends javax.swing.JFrame {
 
     private void cadastrousuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrousuarioActionPerformed
         // TODO add your handling code here:
-
+        CadastrarUsuario cad = new CadastrarUsuario();
+        jddPrincipal.add(cad);
+        cad.setVisible(true);
 
 
     }//GEN-LAST:event_cadastrousuarioActionPerformed
 
     private void listaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaActionPerformed
         // TODO add your handling code here:
-
+        ListaUsuario usu = new ListaUsuario();
+        jddPrincipal.add(usu);
+        usu.setVisible(true);
 
     }//GEN-LAST:event_listaActionPerformed
 
