@@ -5,17 +5,21 @@
  */
 package model;
 
-public class Classificacao {
+/**
+ *
+ * @author PICHAU
+ */
+public class Aluno {
 
-    private final long idClassificacao;
+    private long idAluno;
     private String nome;
 
-    public Classificacao(long idClassificacao) {
-        this.idClassificacao = idClassificacao;
+    public long getIdAluno() {
+        return idAluno;
     }
 
-    public long getIdClassificacao() {
-        return idClassificacao;
+    public void setIdAluno(long idAluno) {
+        this.idAluno = idAluno;
     }
 
     public String getNome() {
@@ -25,4 +29,5 @@ public class Classificacao {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
 }

@@ -22,7 +22,10 @@ public class JDialogLogin extends javax.swing.JDialog {
 
     private void login() {
         LoginService entity = ServiceFactory.getLoginService();
-
+        
+        entity.criarBancoDados();
+        System.err.println("criarBancoDados");
+        
         int res;
 
         String u = usuario.getText().trim();

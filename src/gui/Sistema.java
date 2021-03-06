@@ -41,7 +41,6 @@ public class Sistema extends javax.swing.JFrame {
     private static String usuario;
     private static String senha;
     private static int admin;
-    private static long idUsuario;
 
     /**
      * Creates new form Cadastro

@@ -13,6 +13,46 @@ public class LoginDAOImpl implements LoginDAO {
     private String usuario;
 
     @Override
+    public void criarBancoDados() {
+        Connection con = null;
+        PreparedStatement pstm = null;
+        con = FabricaConexao.getConexao();
+        if (con != null) {
+            try {
+
+                con.setAutoCommit(false);
+
+                pstm = con.prepareStatement(CRIAR_BANCO);
+                pstm.executeUpdate();
+
+                pstm = con.prepareStatement(CRIAR_ALUNO);
+                pstm.executeUpdate();
+
+                pstm = con.prepareStatement(CRIAR_CURSO);
+                pstm.executeUpdate();
+                
+                pstm = con.prepareStatement(CRIAR_CURSOALUNO);
+                pstm.executeUpdate();
+                
+                pstm = con.prepareStatement(CRIAR_LOGIN);
+                pstm.executeUpdate();
+                
+                pstm = con.prepareStatement(CRIAR_PESSOA);
+                pstm.executeUpdate();
+                
+                pstm = con.prepareStatement(CRIAR_USUARIO);
+                pstm.executeUpdate();
+
+                con.commit();
+                con.close();
+
+            } catch (SQLException ex) {
+                System.out.println("Message: " + ex);
+            }
+        }     
+    }
+
+    @Override
     public boolean save(Login login) {
         boolean b = false;
         Connection con = null;
@@ -237,15 +277,11 @@ public class LoginDAOImpl implements LoginDAO {
             try {
 
                 con.setAutoCommit(false);
-                pstm = con.prepareStatement("SET FOREIGN_KEY_CHECKS=0");
-                pstm.execute("SET FOREIGN_KEY_CHECKS=0");
 
                 pstm = con.prepareStatement(EXCLUIR);
                 pstm.setLong(1, idLogin);
 
                 pstm.executeUpdate();
-
-                pstm.execute("SET FOREIGN_KEY_CHECKS=1");
 
                 con.commit();
                 con.close();

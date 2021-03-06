@@ -247,15 +247,10 @@ public class PessoaDAOImpl implements PessoaDAO {
 
                 con.setAutoCommit(false);
 
-                pstm = con.prepareStatement("SET FOREIGN_KEY_CHECKS=0");
-                pstm.execute("SET FOREIGN_KEY_CHECKS=0");
-
                 pstm = con.prepareStatement(EXCLUIR);
                 pstm.setLong(1, idPessoa);
 
                 pstm.executeUpdate();
-
-                pstm.execute("SET FOREIGN_KEY_CHECKS=1");
 
                 con.commit();
                 con.close();

@@ -90,4 +90,9 @@ public class LoginServiceImpl implements LoginService {
         }
         return result;
     }
+    
+    @Override
+    public void criarBancoDados() {        
+        this.loginDAO.criarBancoDados();        
+    }
 }

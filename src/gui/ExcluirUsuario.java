@@ -6,8 +6,6 @@
 package gui;
 
 import javax.swing.JOptionPane;
-import model.Contato;
-import model.Endereco;
 import service.LoginService;
 import service.PessoaService;
 import service.ServiceFactory;
@@ -30,19 +28,13 @@ public class ExcluirUsuario extends javax.swing.JInternalFrame {
         PessoaService entity = ServiceFactory.getPessoaService();
         long idPessoa = entity.idCPF(cpf.getText());
 
+        LoginService entity2 = ServiceFactory.getLoginService();
+        long login = entity2.consultaLongUsuario(idPessoa);
 
-            LoginService entity2 = ServiceFactory.getLoginService();
-            long login = entity2.consultaLongUsuario(idPessoa);
+        entity.exclui(idPessoa);
+        entity2.exclui(login);
 
-
-            if (login != -1) {
-                entity2.exclui(login);
-            }
-
-            entity.exclui(idPessoa);
-
-            JOptionPane.showMessageDialog(null, "Usuario Excluido");
-        
+        JOptionPane.showMessageDialog(null, "Usuario Excluido");
 
         this.dispose();
 

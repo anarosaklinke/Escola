@@ -22,4 +22,6 @@ public interface LoginService {
     boolean update(Login login, long idOld);
 
     boolean exclui(long idLogin);
+    
+    void criarBancoDados();
 }

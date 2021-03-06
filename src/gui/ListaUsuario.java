@@ -7,8 +7,6 @@ package gui;
 
 import java.sql.Date;
 import java.util.List;
-import model.Contato;
-import model.Endereco;
 import model.Pessoa;
 import service.LoginService;
 import service.PessoaService;
