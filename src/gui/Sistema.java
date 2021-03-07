@@ -78,11 +78,11 @@ public class Sistema extends javax.swing.JFrame {
         );
         jddPrincipalLayout.setVerticalGroup(
             jddPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         getContentPane().add(jddPrincipal);
-        jddPrincipal.setBounds(0, 0, 1200, 560);
+        jddPrincipal.setBounds(0, 0, 1200, 600);
 
         jMenuBar2.setToolTipText("");
         jMenuBar2.setName(""); // NOI18N
@@ -129,7 +129,7 @@ public class Sistema extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar2);
 
-        setBounds(0, 0, 1228, 629);
+        setBounds(0, 0, 1228, 662);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cadastrousuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrousuarioActionPerformed
@@ -205,7 +205,6 @@ public class Sistema extends javax.swing.JFrame {
             Sistema sistema = new Sistema();
             
             if (admin == 0) {
-                //sistema.administracao.setVisible(false);
                 sistema.usuarios.setVisible(false);
             }
             

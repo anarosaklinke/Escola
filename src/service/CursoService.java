@@ -12,6 +12,8 @@ public interface CursoService {
     long recuperaUltimoId();
 
     List<Curso> recuperaCurso();
+    
+    List<Curso> pesquisa(String chave);
 
     boolean verificaCodCurso(String codCurso);
 

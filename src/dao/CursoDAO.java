@@ -22,6 +22,11 @@ public interface CursoDAO {
 
     final String EXCLUIR = "DELETE FROM Curso "
             + "WHERE idCurso = ? ";
+    
+        final String CHAVE = "SELECT * FROM curso WHERE "
+            + " descricao LIKE ? OR "
+            + " ementa LIKE ? OR "
+            + " codCurso LIKE ? ";
 
     public boolean save(Curso curso);
 
@@ -32,6 +37,8 @@ public interface CursoDAO {
     public long recuperaUltimoId();
 
     public List<Curso> recuperaCurso();
+    
+    public List<Curso> pesquisa(String chave);
 
     public boolean verificaCodCurso(String codCurso);
 

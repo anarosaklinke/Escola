@@ -57,7 +57,7 @@ public class CursoDAOImpl implements CursoDAO {
                 pstm.setString(2, curso.getEmenta());
                 pstm.setString(3, curso.getCodCurso());
                 pstm.setLong(4, idOld);
-                
+
                 pstm.executeUpdate();
 
                 con.commit();
@@ -90,7 +90,7 @@ public class CursoDAOImpl implements CursoDAO {
                     temp.setDescricao(res.getNString("descricao"));
                     temp.setEmenta(res.getNString("ementa"));
                     temp.setCodCurso(res.getNString("codCurso"));
- 
+
                 } else {
                     temp = null;
                 }
@@ -253,6 +253,43 @@ public class CursoDAOImpl implements CursoDAO {
             }
         }
         return b;
+    }
+
+    @Override
+    public List<Curso> pesquisa(String chave) {
+        Connection con = null;
+        PreparedStatement pstm = null;
+        ResultSet res = null;
+        List<Curso> temp = new ArrayList<Curso>();
+        con = FabricaConexao.getConexaoSchema();
+        if (con != null) {
+            try {
+                chave = "%" + chave + "%";
+                
+                pstm = con.prepareStatement(CHAVE);
+                pstm.setString(1, chave);
+                pstm.setString(2, chave);
+                pstm.setString(3, chave);
+
+                res = pstm.executeQuery();
+
+                Curso curso;
+                while (res != null && res.next()) {
+                    curso = new Curso(res.getLong("idCurso"));
+                    curso.setDescricao(res.getNString("descricao"));
+                    curso.setEmenta(res.getNString("ementa"));
+                    curso.setCodCurso(res.getNString("codCurso"));
+
+                    temp.add(curso);
+                }
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Message: " + ex);
+            }
+        }
+
+        return temp;
+
     }
 
 }

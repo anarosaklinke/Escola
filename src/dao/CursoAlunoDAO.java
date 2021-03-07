@@ -23,6 +23,8 @@ public interface CursoAlunoDAO {
     final String EXCLUIR = "DELETE FROM curso_aluno "
             + " WHERE Aluno_idAluno = ? "
             + " AND Curso_idCurso = ?";
+    
+
 
     public boolean save(CursoAluno cursoAluno);
 

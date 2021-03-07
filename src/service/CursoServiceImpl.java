@@ -80,6 +80,16 @@ public class CursoServiceImpl implements CursoService {
     }
 
     @Override
+    public List<Curso> pesquisa(String chave) {
+        List<Curso> b = null;
+        if (chave != null) {
+
+            b = this.cursoDAO.pesquisa(chave);
+        }
+        return b;
+    }
+
+    @Override
     public long idCodCurso(String codCurso) {
         long id = -1;
         if (codCurso != null) {

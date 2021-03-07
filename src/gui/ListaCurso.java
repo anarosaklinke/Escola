@@ -6,9 +6,14 @@
 package gui;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import model.Curso;
+import model.CursoAluno;
+import service.AlunoService;
+import service.CursoAlunoService;
 import service.CursoService;
 import service.ServiceFactory;
+import utils.validacao;
 
 /**
  *
@@ -74,12 +79,26 @@ public class ListaCurso extends javax.swing.JInternalFrame {
         }
     }
 
-    private void excluirUsuario() {
-        if (tabelaCurso.getSelectedRow() != -1) {
-            ExcluirCurso exclui = new ExcluirCurso();
-            exclui.codCurso.setText((String) tabelaCurso.getModel().getValueAt(tabelaCurso.getSelectedRow(), 0));
-            getParent().add(exclui);
-            exclui.setVisible(true);
+    private void excluir() {
+
+        CursoAlunoService entity = ServiceFactory.getCursoAlunoService();
+        CursoService entity2 = ServiceFactory.getCursoService();
+
+        String codcurso = (String) tabelaCurso.getModel().getValueAt(tabelaCurso.getSelectedRow(), 0);
+
+        long idCurso = entity2.idCodCurso(codcurso);
+        List<CursoAluno> aluno = entity.recuperaCursoAluno(idCurso);
+
+        if (aluno.isEmpty()) {
+
+            if (tabelaCurso.getSelectedRow() != -1) {
+                ExcluirCurso exclui = new ExcluirCurso();
+                exclui.codCurso.setText(codcurso);
+                getParent().add(exclui);
+                exclui.setVisible(true);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Curso Possui Aluno - Não Pode Ser Excluido");
         }
     }
 
@@ -100,10 +119,53 @@ public class ListaCurso extends javax.swing.JInternalFrame {
 
             consultar.codCurso1.setText((String) tabelaCurso.getModel().getValueAt(tabelaCurso.getSelectedRow(), 0));
             consultar.nomeCurso.setText((String) tabelaCurso.getModel().getValueAt(tabelaCurso.getSelectedRow(), 1));
-            
+
             getParent().add(consultar);
             consultar.setVisible(true);
         }
+    }
+
+    private void pesquisar() {
+        String chave = validacao.formatString(pesquisa.getText().trim());
+
+        if (chave.isEmpty()) {
+            exibir();
+        } else {
+            exibirPesquisa(chave);
+        }
+    }
+
+    public final void exibirPesquisa(String chave) {
+        CursoService entity = ServiceFactory.getCursoService();
+
+        List<Curso> curso = entity.pesquisa(chave);
+        String[][] dados = null;
+
+        if (curso != null) {
+
+            Curso c;
+            dados = new String[curso.size()][3];
+
+            for (int i = 0; i < curso.size(); i++) {
+
+                c = curso.get(i);
+                dados[i][1] = c.getDescricao();
+                dados[i][2] = c.getEmenta();
+                dados[i][0] = c.getCodCurso();
+            }
+
+        }
+        tabelaCurso = new javax.swing.JTable();
+
+        tabelaCurso.setModel(new javax.swing.table.DefaultTableModel(
+                dados,
+                new String[]{
+                    "Código do Curso", "Descrição", "Ementa"
+                }
+        ));
+
+        jScrollPane2.setViewportView(tabelaCurso);
+
     }
 
     /**
@@ -124,6 +186,7 @@ public class ListaCurso extends javax.swing.JInternalFrame {
         usuario = new javax.swing.JButton();
         Atualizar1 = new javax.swing.JButton();
         Atualizar2 = new javax.swing.JButton();
+        pesquisa = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -156,7 +219,9 @@ public class ListaCurso extends javax.swing.JInternalFrame {
         label1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         label1.setText("Lista de Cursos:");
 
-        atualizar.setLabel("Atualizar");
+        atualizar.setActionCommand("atualizar");
+        atualizar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        atualizar.setLabel("Atualizar / Filtrar");
         atualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 atualizarActionPerformed(evt);
@@ -211,20 +276,23 @@ public class ListaCurso extends javax.swing.JInternalFrame {
                             .addComponent(usuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Atualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(203, 203, 203)
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
                 .addComponent(atualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(325, 325, 325))
+                .addGap(185, 185, 185))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(atualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(atualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pesquisa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Atualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,7 +309,7 @@ public class ListaCurso extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirActionPerformed
-        excluirUsuario();
+        excluir();
     }//GEN-LAST:event_ExcluirActionPerformed
 
     private void AtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizarActionPerformed
@@ -251,7 +319,9 @@ public class ListaCurso extends javax.swing.JInternalFrame {
 
     private void atualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarActionPerformed
         // TODO add your handling code here:
-        exibir();
+        pesquisar();
+
+
     }//GEN-LAST:event_atualizarActionPerformed
 
     private void usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioActionPerformed
@@ -278,6 +348,7 @@ public class ListaCurso extends javax.swing.JInternalFrame {
     private java.awt.Button atualizar;
     private javax.swing.JScrollPane jScrollPane2;
     private java.awt.Label label1;
+    private javax.swing.JTextField pesquisa;
     private javax.swing.JTable tabelaCurso;
     private javax.swing.JButton usuario;
     // End of variables declaration//GEN-END:variables
