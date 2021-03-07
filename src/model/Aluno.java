@@ -13,7 +13,13 @@ public class Aluno {
 
     private long idAluno;
     private String nome;
+    private String codAluno;
 
+    public Aluno (long idAluno) {
+        this.idAluno = idAluno;
+    }
+    
+    
     public long getIdAluno() {
         return idAluno;
     }
@@ -28,6 +34,14 @@ public class Aluno {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getCodAluno() {
+        return codAluno;
+    }
+
+    public void setCodAluno(String codAluno) {
+        this.codAluno = codAluno;
     }
 
 }

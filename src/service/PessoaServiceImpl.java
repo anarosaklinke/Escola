@@ -10,7 +10,7 @@ public class PessoaServiceImpl implements PessoaService {
     private PessoaDAO pessoaDAO;
 
     public PessoaServiceImpl() {
-        this.pessoaDAO = DaoFactory.getClienteDAO();
+        this.pessoaDAO = DaoFactory.getPessoaDAO();
     }
 
     @Override

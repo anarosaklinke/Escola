@@ -14,6 +14,11 @@ public class Curso {
     private long idCurso;
     private String descricao;
     private String ementa;
+    private String codCurso;
+
+    public Curso(long idCurso) {
+        this.idCurso = idCurso;
+    }
 
     public long getIdCurso() {
         return idCurso;
@@ -37,6 +42,14 @@ public class Curso {
 
     public void setEmenta(String ementa) {
         this.ementa = ementa;
+    }
+
+    public String getCodCurso() {
+        return codCurso;
+    }
+
+    public void setCodCurso(String codCurso) {
+        this.codCurso = codCurso;
     }
 
 }

@@ -9,11 +9,15 @@ public class ServiceFactory {
         return new PessoaServiceImpl();
     }
 
-
-
     public static LoginService getLoginService() {
         return new LoginServiceImpl();
     }
 
-
+    public static AlunoService getAlunoService() {
+        return new AlunoServiceImpl();
+    }
+    
+    public static CursoService getCursoService() {
+        return new CursoServiceImpl();
+    }
 }

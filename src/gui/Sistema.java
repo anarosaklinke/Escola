@@ -61,8 +61,8 @@ public class Sistema extends javax.swing.JFrame {
         jddPrincipal = new javax.swing.JDesktopPane();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
         listaLivros = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         cliente = new javax.swing.JMenu();
         cadastrousuario = new javax.swing.JMenuItem();
         lista = new javax.swing.JMenuItem();
@@ -87,23 +87,23 @@ public class Sistema extends javax.swing.JFrame {
         jMenuBar2.setToolTipText("");
         jMenuBar2.setName(""); // NOI18N
 
-        jMenu4.setText("Livros");
+        jMenu4.setText("Escola");
 
-        jMenuItem2.setText("Cadastrar Livro Manualmente");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem2);
-
-        listaLivros.setText("Lista de Livros");
+        listaLivros.setText("Alunos");
         listaLivros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listaLivrosActionPerformed(evt);
             }
         });
         jMenu4.add(listaLivros);
+
+        jMenuItem2.setText("Cursos");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem2);
 
         jMenuBar2.add(jMenu4);
 
@@ -151,7 +151,9 @@ public class Sistema extends javax.swing.JFrame {
 
     private void listaLivrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaLivrosActionPerformed
         // TODO add your handling code here:
-
+        ListaAluno usu = new ListaAluno();
+        jddPrincipal.add(usu);
+        usu.setVisible(true);
 
 
     }//GEN-LAST:event_listaLivrosActionPerformed
@@ -159,7 +161,9 @@ public class Sistema extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
 
-
+        ListaCurso usu = new ListaCurso();
+        jddPrincipal.add(usu);
+        usu.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**

@@ -9,18 +9,22 @@ package model;
  *
  * @author PICHAU
  */
-public class Curso_Aluno {
+public class CursoAluno {
     
-    private long idCurso_Aluno;
+    private long idCursoAluno;
     private long idAluno;
     private long idCurso;
-
-    public long getIdCurso_Aluno() {
-        return idCurso_Aluno;
+    
+    public CursoAluno(long idCursoAluno) {
+        this.idCursoAluno = idCursoAluno;
     }
 
-    public void setIdCurso_Aluno(long idCurso_Aluno) {
-        this.idCurso_Aluno = idCurso_Aluno;
+    public long getIdCursoAluno() {
+        return idCursoAluno;
+    }
+
+    public void setIdCursoAluno(long idCursoAluno) {
+        this.idCursoAluno = idCursoAluno;
     }
 
     public long getIdAluno() {

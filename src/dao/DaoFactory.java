@@ -9,12 +9,16 @@ public class DaoFactory {
         return new LoginDAOImpl();
     }
 
-
-
-    public static PessoaDAO getClienteDAO() {
+    public static PessoaDAO getPessoaDAO() {
         return new PessoaDAOImpl();
     }
 
-
+    public static AlunoDAO getAlunoDAO() {
+        return new AlunoDAOImpl();
+    }
+    
+    public static CursoDAO getCursoDAO() {
+        return new CursoDAOImpl();
+    }
 
 }
