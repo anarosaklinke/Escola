@@ -25,21 +25,25 @@ public class CursoAlunoServiceImpl implements CursoAlunoService {
     }
 
     @Override
-    public boolean exclui(long idCursoAluno) {
+    public boolean exclui(long aluno, long curso) {
         boolean b = false;
 
-        if (idCursoAluno > 0) {
-            b = this.CursoAlunoDAO.exclui(idCursoAluno);
+        if (aluno > 0) {
+            if (curso > 0) {
+                b = this.CursoAlunoDAO.exclui(aluno, curso);
+            }
         }
 
         return b;
     }
 
     @Override
-    public boolean verificaAluno(long idaluno) {
+    public boolean verificaAluno(long idaluno, long idcurso) {
         boolean b = false;
-        if (idaluno >0) {
-            b = this.CursoAlunoDAO.verificaAluno(idaluno);
+        if (idaluno > 0) {
+            if (idcurso > 0) {
+                b = this.CursoAlunoDAO.verificaAluno(idaluno, idcurso);
+            }
         }
         return b;
     }
@@ -54,9 +58,11 @@ public class CursoAlunoServiceImpl implements CursoAlunoService {
     }
 
     @Override
-    public List<CursoAluno> recuperaCursoAluno() {
-        List<CursoAluno> b;
-        b = this.CursoAlunoDAO.recuperaCursoAluno();
+    public List<CursoAluno> recuperaCursoAluno(long idcurso) {
+        List<CursoAluno> b = null;
+            if (idcurso > 0) {
+                b = this.CursoAlunoDAO.recuperaCursoAluno(idcurso);
+        }
         return b;
     }
 

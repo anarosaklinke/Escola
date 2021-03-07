@@ -39,7 +39,7 @@ public class ListaCurso extends javax.swing.JInternalFrame {
             dados[i][1] = c.getDescricao();
             dados[i][2] = c.getEmenta();
             dados[i][0] = c.getCodCurso();
-                    }
+        }
         tabelaCurso = new javax.swing.JTable();
 
         tabelaCurso.setModel(new javax.swing.table.DefaultTableModel(
@@ -53,9 +53,6 @@ public class ListaCurso extends javax.swing.JInternalFrame {
 
     }
 
-
-
-
     private void cadastrar() {
 
         CadastrarCurso cad = new CadastrarCurso();
@@ -66,7 +63,7 @@ public class ListaCurso extends javax.swing.JInternalFrame {
     private void alteraCurso() {
         if (tabelaCurso.getSelectedRow() != -1) {
             AlteraCurso alterar = new AlteraCurso();
-            
+
             alterar.codCursoOld.setText((String) tabelaCurso.getModel().getValueAt(tabelaCurso.getSelectedRow(), 0));
             alterar.codCurso.setText((String) tabelaCurso.getModel().getValueAt(tabelaCurso.getSelectedRow(), 0));
             alterar.descricao.setText((String) tabelaCurso.getModel().getValueAt(tabelaCurso.getSelectedRow(), 1));
@@ -85,18 +82,29 @@ public class ListaCurso extends javax.swing.JInternalFrame {
             exclui.setVisible(true);
         }
     }
-    
+
     private void selecionar() {
         if (tabelaCurso.getSelectedRow() != -1) {
-            SelecionarAlunos selecionar = new SelecionarAlunos();
-            
+            SelecionarAlunos selecionar = new SelecionarAlunos((String) tabelaCurso.getModel().getValueAt(tabelaCurso.getSelectedRow(), 0));
+
             selecionar.codCurso.setText((String) tabelaCurso.getModel().getValueAt(tabelaCurso.getSelectedRow(), 0));
 
             getParent().add(selecionar);
             selecionar.setVisible(true);
         }
     }
-    
+
+    private void consultar() {
+        if (tabelaCurso.getSelectedRow() != -1) {
+            ConsultarCurso consultar = new ConsultarCurso((String) tabelaCurso.getModel().getValueAt(tabelaCurso.getSelectedRow(), 0));
+
+            consultar.codCurso1.setText((String) tabelaCurso.getModel().getValueAt(tabelaCurso.getSelectedRow(), 0));
+            consultar.nomeCurso.setText((String) tabelaCurso.getModel().getValueAt(tabelaCurso.getSelectedRow(), 1));
+            
+            getParent().add(consultar);
+            consultar.setVisible(true);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -253,6 +261,7 @@ public class ListaCurso extends javax.swing.JInternalFrame {
 
     private void Atualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Atualizar1ActionPerformed
         // TODO add your handling code here:
+        consultar();
     }//GEN-LAST:event_Atualizar1ActionPerformed
 
     private void Atualizar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Atualizar2ActionPerformed

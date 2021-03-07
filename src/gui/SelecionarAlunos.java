@@ -22,7 +22,11 @@ public class SelecionarAlunos extends javax.swing.JInternalFrame {
     /**
      * Creates new form ListaClientes
      */
-    public SelecionarAlunos() {
+    private String codcurso;
+    
+    public SelecionarAlunos(String codcurso) {
+        
+        this.codcurso = codcurso;
         initComponents();
 
         exibir();
@@ -32,6 +36,7 @@ public class SelecionarAlunos extends javax.swing.JInternalFrame {
 
         AlunoService entity = ServiceFactory.getAlunoService();
         CursoAlunoService entity2 = ServiceFactory.getCursoAlunoService();
+        CursoService entity3 = ServiceFactory.getCursoService();
 
         List<Aluno> aluno = entity.recuperaAluno();
         
@@ -39,12 +44,13 @@ public class SelecionarAlunos extends javax.swing.JInternalFrame {
         Aluno a;
        
         int i;
-        
+        long idCurso = entity3.idCodCurso(codcurso);
+              
         for ( i = 0; i < aluno.size(); i++) {
 
             a = aluno.get(i);
 
-            if ( !entity2.verificaAluno(a.getIdAluno()) ) {
+            if ( !entity2.verificaAluno(a.getIdAluno(), idCurso) ) {
                 alunoExibir.add(a);                
             }
         }
@@ -52,6 +58,7 @@ public class SelecionarAlunos extends javax.swing.JInternalFrame {
         
         
         if(alunoExibir.size() > 0){
+            
         Object[][] dados = new Object[alunoExibir.size()][3];
         for ( i = 0; i < alunoExibir.size(); i++) {
 
@@ -205,6 +212,14 @@ public class SelecionarAlunos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         cadastrar();
     }//GEN-LAST:event_AtualizarActionPerformed
+
+    public String getCodcurso() {
+        return codcurso;
+    }
+
+    public void setCodcurso(String codcurso) {
+        this.codcurso = codcurso;
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

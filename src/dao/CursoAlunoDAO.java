@@ -13,24 +13,28 @@ public interface CursoAlunoDAO {
 
     final String RECUPERA_CURSOALUNO = "SELECT * FROM curso_aluno WHERE idcurso_aluno = ? ";
 
-    final String RECUPERA = "SELECT * FROM curso_aluno ";
+    final String RECUPERA = "SELECT * FROM curso_aluno WHERE "
+            + " Curso_idCurso = ? ";
 
-    final String VERIFICA_ALUNO = "SELECT * FROM curso_aluno WHERE Aluno_idAluno = ?";
+    final String VERIFICA_ALUNO = "SELECT * FROM curso_aluno WHERE "
+            + " Aluno_idAluno = ? "
+            + " AND Curso_idCurso = ?";
     
     final String EXCLUIR = "DELETE FROM curso_aluno "
-            + "WHERE Aluno_idAluno = ? ";
+            + " WHERE Aluno_idAluno = ? "
+            + " AND Curso_idCurso = ?";
 
     public boolean save(CursoAluno cursoAluno);
 
-    public boolean exclui(long idCursoAluno);
+    public boolean exclui(long aluno, long curso);
 
     public CursoAluno recuperaCursoAlunoId(long idCursoAluno);
 
     public long recuperaUltimoId();
 
-    public List<CursoAluno> recuperaCursoAluno();
+    public List<CursoAluno> recuperaCursoAluno(long idcurso);
 
-    public boolean verificaAluno(long idaluno);
+    public boolean verificaAluno(long idaluno, long idcurso);
 
 
 }

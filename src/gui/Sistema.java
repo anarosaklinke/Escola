@@ -63,7 +63,7 @@ public class Sistema extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         listaLivros = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        cliente = new javax.swing.JMenu();
+        usuarios = new javax.swing.JMenu();
         cadastrousuario = new javax.swing.JMenuItem();
         lista = new javax.swing.JMenuItem();
 
@@ -107,7 +107,7 @@ public class Sistema extends javax.swing.JFrame {
 
         jMenuBar2.add(jMenu4);
 
-        cliente.setText("Usuários");
+        usuarios.setText("Usuários");
 
         cadastrousuario.setText("Cadastro");
         cadastrousuario.addActionListener(new java.awt.event.ActionListener() {
@@ -115,7 +115,7 @@ public class Sistema extends javax.swing.JFrame {
                 cadastrousuarioActionPerformed(evt);
             }
         });
-        cliente.add(cadastrousuario);
+        usuarios.add(cadastrousuario);
 
         lista.setText("Lista de Usuario");
         lista.addActionListener(new java.awt.event.ActionListener() {
@@ -123,9 +123,9 @@ public class Sistema extends javax.swing.JFrame {
                 listaActionPerformed(evt);
             }
         });
-        cliente.add(lista);
+        usuarios.add(lista);
 
-        jMenuBar2.add(cliente);
+        jMenuBar2.add(usuarios);
 
         setJMenuBar(jMenuBar2);
 
@@ -195,37 +195,33 @@ public class Sistema extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-
-                final JFrame frame = new JFrame("Login");
-
-                JDialog login = new JDialogLogin(frame, true);
-
-                login.setVisible(true);
-
-                Sistema sistema = new Sistema();
-
-                if (admin == 0) {
-                    //sistema.administracao.setVisible(false);
-                    sistema.cliente.setVisible(false);
-                }
-
-                sistema.setVisible(true);
-
+        java.awt.EventQueue.invokeLater(() -> {
+            final JFrame frame = new JFrame("Login");
+            
+            JDialog login = new JDialogLogin(frame, true);
+            
+            login.setVisible(true);
+            
+            Sistema sistema = new Sistema();
+            
+            if (admin == 0) {
+                //sistema.administracao.setVisible(false);
+                sistema.usuarios.setVisible(false);
             }
+            
+            sistema.setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem cadastrousuario;
-    private javax.swing.JMenu cliente;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem2;
     public javax.swing.JDesktopPane jddPrincipal;
     private javax.swing.JMenuItem lista;
     private javax.swing.JMenuItem listaLivros;
+    private javax.swing.JMenu usuarios;
     // End of variables declaration//GEN-END:variables
 
     /**

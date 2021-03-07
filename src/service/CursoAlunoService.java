@@ -11,9 +11,9 @@ public interface CursoAlunoService {
 
     long recuperaUltimoId();
 
-    List<CursoAluno> recuperaCursoAluno();
+    List<CursoAluno> recuperaCursoAluno(long idcurso);
 
-    boolean verificaAluno(long idaluno);
+    boolean verificaAluno(long idaluno, long idcurso);
 
-    boolean exclui(long idCursoAluno);
+    boolean exclui(long aluno, long cursoo);
 }

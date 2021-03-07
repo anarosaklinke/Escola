@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.Aluno;
+import model.Curso;
 import model.CursoAluno;
 import service.AlunoService;
 import service.CursoAlunoService;
@@ -21,24 +22,42 @@ public class ConsultarCurso extends javax.swing.JInternalFrame {
     /**
      * Creates new form ListaClientes
      */
-    public ConsultarCurso() {
-        initComponents();
+    private String codcurso;
 
+    public ConsultarCurso(String codcurso) {
+
+        this.codcurso = codcurso;
+
+        initComponents();
         exibir();
     }
 
     public final void exibir() {
 
-        AlunoService entity = ServiceFactory.getAlunoService();
+        CursoAlunoService entity = ServiceFactory.getCursoAlunoService();
+        CursoService entity2 = ServiceFactory.getCursoService();
+        AlunoService entity3 = ServiceFactory.getAlunoService();
 
-        List<Aluno> aluno = entity.recuperaAluno();
+        long idCurso = entity2.idCodCurso(codcurso);
 
-        Aluno a;
+        List<CursoAluno> aluno = entity.recuperaCursoAluno(idCurso);
+
+        CursoAluno al;
         Object[][] dados = new Object[aluno.size()][3];
+        Aluno a;
+
+        Curso c;
+
+        c = entity2.recuperaCursoId(entity2.idCodCurso(codcurso));
+
+        ementa.setText(c.getEmenta());
 
         for (int i = 0; i < aluno.size(); i++) {
 
-            a = aluno.get(i);
+            al = aluno.get(i);
+
+            a = entity3.recuperaAlunoId(al.getIdAluno());
+
             dados[i][1] = a.getNome();
             dados[i][0] = a.getCodAluno();
             dados[i][2] = false;
@@ -64,7 +83,7 @@ public class ConsultarCurso extends javax.swing.JInternalFrame {
 
     }
 
-    private void cadastrar() {
+    private void excluir() {
 
         CursoAlunoService entity = ServiceFactory.getCursoAlunoService();
         CursoService entity2 = ServiceFactory.getCursoService();
@@ -73,7 +92,7 @@ public class ConsultarCurso extends javax.swing.JInternalFrame {
         CursoAluno cursoAluno;
         long idCursoAluno, idCurso, idAluno;
 
-        idCurso = entity2.idCodCurso(codCurso.getText());
+        idCurso = entity2.idCodCurso(codcurso);
 
         for (int i = 0; i < tabelaAluno.getRowCount(); i++) {
             if ((Boolean) tabelaAluno.getModel().getValueAt(i, 2)) {
@@ -90,13 +109,20 @@ public class ConsultarCurso extends javax.swing.JInternalFrame {
                 cursoAluno.setIdAluno(idAluno);
                 cursoAluno.setIdCurso(idCurso);
 
-                entity.save(cursoAluno);
+                entity.exclui(idAluno, idCurso);
             }
         }
-        
-        JOptionPane.showMessageDialog(null, "Alunos Cadastrados");
-        
-        this.dispose();
+
+        JOptionPane.showMessageDialog(null, "Alunos Excluidos do Curso");
+        exibir();
+    }
+
+    private void cadastrar() {
+        SelecionarAlunos selecionar = new SelecionarAlunos(codcurso);
+        selecionar.codCurso.setText(codcurso);
+
+        getParent().add(selecionar);
+        selecionar.setVisible(true);
     }
 
     /**
@@ -112,8 +138,15 @@ public class ConsultarCurso extends javax.swing.JInternalFrame {
         tabelaAluno = new javax.swing.JTable();
         Atualizar = new javax.swing.JButton();
         label1 = new java.awt.Label();
-        codCurso = new javax.swing.JLabel();
+        nomeCurso = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        Atualizar1 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        codCurso1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ementa = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        Atualizar2 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -126,8 +159,8 @@ public class ConsultarCurso extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tabelaAluno);
 
         Atualizar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Atualizar.setForeground(new java.awt.Color(0, 0, 204));
-        Atualizar.setText("Cadastrar");
+        Atualizar.setForeground(new java.awt.Color(204, 0, 51));
+        Atualizar.setText("Excluir");
         Atualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AtualizarActionPerformed(evt);
@@ -135,10 +168,39 @@ public class ConsultarCurso extends javax.swing.JInternalFrame {
         });
 
         label1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        label1.setText("Selecione Alunos para o Curso:");
+        label1.setText("Alunos Cadastrados No Curso:");
+
+        nomeCurso.setForeground(new java.awt.Color(0, 0, 204));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("<< Selecione Para Cadastrar");
+        jLabel1.setText("<< Selecione Para Excluir");
+
+        Atualizar1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Atualizar1.setForeground(new java.awt.Color(0, 0, 204));
+        Atualizar1.setText("Cadastrar");
+        Atualizar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Atualizar1ActionPerformed(evt);
+            }
+        });
+
+        codCurso1.setForeground(new java.awt.Color(0, 0, 153));
+
+        ementa.setEditable(false);
+        ementa.setColumns(20);
+        ementa.setRows(5);
+        jScrollPane1.setViewportView(ementa);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("EMENTA:");
+
+        Atualizar2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        Atualizar2.setText("Atualizar");
+        Atualizar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Atualizar2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,33 +210,61 @@ public class ConsultarCurso extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(codCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(66, 66, 66)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Atualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))))
-                .addGap(0, 33, Short.MAX_VALUE))
+                        .addGap(127, 127, 127)
+                        .addComponent(Atualizar2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(nomeCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(codCurso1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator1)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(68, 68, 68)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Atualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(Atualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(124, 124, 124)
+                                .addComponent(jLabel2)))
+                        .addGap(0, 59, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(codCurso, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(175, 175, 175)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(codCurso1, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                            .addComponent(nomeCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel1)
-                        .addGap(62, 62, 62)
-                        .addComponent(Atualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(Atualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(Atualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Atualizar2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -182,16 +272,44 @@ public class ConsultarCurso extends javax.swing.JInternalFrame {
 
     private void AtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizarActionPerformed
         // TODO add your handling code here:
-        cadastrar();
+        excluir();
     }//GEN-LAST:event_AtualizarActionPerformed
+
+    private void Atualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Atualizar1ActionPerformed
+        // TODO add your handling code here:
+        cadastrar();
+
+
+    }//GEN-LAST:event_Atualizar1ActionPerformed
+
+    private void Atualizar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Atualizar2ActionPerformed
+        // TODO add your handling code here:
+
+        exibir();
+    }//GEN-LAST:event_Atualizar2ActionPerformed
+
+    public String getCodcurso() {
+        return codcurso;
+    }
+
+    public void setCodcurso(String codcurso) {
+        this.codcurso = codcurso;
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Atualizar;
-    public javax.swing.JLabel codCurso;
+    private javax.swing.JButton Atualizar1;
+    private javax.swing.JButton Atualizar2;
+    public javax.swing.JLabel codCurso1;
+    private javax.swing.JTextArea ementa;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
     private java.awt.Label label1;
+    public javax.swing.JLabel nomeCurso;
     private javax.swing.JTable tabelaAluno;
     // End of variables declaration//GEN-END:variables
 

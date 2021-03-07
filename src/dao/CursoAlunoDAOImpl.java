@@ -58,7 +58,7 @@ public class CursoAlunoDAOImpl implements CursoAlunoDAO {
 
                 if (res != null && res.next()) {
                     temp.setIdCursoAluno(res.getLong("idcurso_aluno"));
-                    temp.setIdCurso(res.getLong("CursoAluno_idCurso"));
+                    temp.setIdCurso(res.getLong("Curso_idCurso"));
                     temp.setIdAluno(res.getLong("Aluno_idAluno"));
  
                 } else {
@@ -105,7 +105,7 @@ public class CursoAlunoDAOImpl implements CursoAlunoDAO {
     }
 
     @Override
-    public List<CursoAluno> recuperaCursoAluno() {
+    public List<CursoAluno> recuperaCursoAluno(long idcurso) {
         Connection con = null;
         PreparedStatement pstm = null;
         ResultSet res = null;
@@ -115,12 +115,14 @@ public class CursoAlunoDAOImpl implements CursoAlunoDAO {
             try {
 
                 pstm = con.prepareStatement(RECUPERA);
+                pstm.setLong(1, idcurso);
+                
                 res = pstm.executeQuery();
 
                 CursoAluno cursoAluno;
                 while (res != null && res.next()) {
                     cursoAluno = new CursoAluno(res.getLong("idcurso_aluno"));
-                    cursoAluno.setIdCurso(res.getLong("CursoAluno_idCurso"));
+                    cursoAluno.setIdCurso(res.getLong("Curso_idCurso"));
                     cursoAluno.setIdAluno(res.getLong("Aluno_idAluno"));
 
                     temp.add(cursoAluno);
@@ -136,7 +138,7 @@ public class CursoAlunoDAOImpl implements CursoAlunoDAO {
     }
 
     @Override
-    public boolean verificaAluno(long idaluno) {
+    public boolean verificaAluno(long idaluno, long idcurso) {
         Connection con = null;
         PreparedStatement pstm = null;
         ResultSet res = null;
@@ -149,8 +151,9 @@ public class CursoAlunoDAOImpl implements CursoAlunoDAO {
                 Statement stm = con.createStatement();
                 pstm = con.prepareStatement(VERIFICA_ALUNO);
                 pstm.setLong(1, idaluno);
+                pstm.setLong(2, idcurso);
                 res = pstm.executeQuery();
-
+                
                 if (res != null && res.next()) {
                     temp = true;
                 } 
@@ -167,7 +170,7 @@ public class CursoAlunoDAOImpl implements CursoAlunoDAO {
 
 
     @Override
-    public boolean exclui(long idcurso_aluno) {
+    public boolean exclui(long aluno, long curso) {
         boolean b = false;
         Connection con = null;
         PreparedStatement pstm = null;
@@ -179,7 +182,8 @@ public class CursoAlunoDAOImpl implements CursoAlunoDAO {
                 con.setAutoCommit(false);
 
                 pstm = con.prepareStatement(EXCLUIR);
-                pstm.setLong(1, idcurso_aluno);
+                pstm.setLong(1, aluno);
+                pstm.setLong(2, curso);
 
                 pstm.executeUpdate();
 
