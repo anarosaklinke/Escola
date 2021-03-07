@@ -5,7 +5,6 @@
  */
 package gui;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -17,12 +16,12 @@ import service.CursoAlunoService;
 import service.CursoService;
 import service.ServiceFactory;
 
-public class SelecionarAlunos extends javax.swing.JInternalFrame {
+public class ConsultarCurso extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ListaClientes
      */
-    public SelecionarAlunos() {
+    public ConsultarCurso() {
         initComponents();
 
         exibir();
@@ -31,38 +30,19 @@ public class SelecionarAlunos extends javax.swing.JInternalFrame {
     public final void exibir() {
 
         AlunoService entity = ServiceFactory.getAlunoService();
-        CursoAlunoService entity2 = ServiceFactory.getCursoAlunoService();
 
         List<Aluno> aluno = entity.recuperaAluno();
-        
-        List<Aluno> alunoExibir = new ArrayList();
+
         Aluno a;
-       
-        int i;
-        
-        for ( i = 0; i < aluno.size(); i++) {
+        Object[][] dados = new Object[aluno.size()][3];
+
+        for (int i = 0; i < aluno.size(); i++) {
 
             a = aluno.get(i);
-
-            if ( !entity2.verificaAluno(a.getIdAluno()) ) {
-                alunoExibir.add(a);                
-            }
-        }
-        
-        
-        
-        if(alunoExibir.size() > 0){
-        Object[][] dados = new Object[alunoExibir.size()][3];
-        for ( i = 0; i < alunoExibir.size(); i++) {
-
-            a = alunoExibir.get(i);
-
             dados[i][1] = a.getNome();
             dados[i][0] = a.getCodAluno();
-            dados[i][2] = false;            
+            dados[i][2] = false;
         }
-        
-        
         tabelaAluno = new JTable() {
             private static final long serialVersionUID = 1L;
 
@@ -81,9 +61,7 @@ public class SelecionarAlunos extends javax.swing.JInternalFrame {
         ));
 
         jScrollPane2.setViewportView(tabelaAluno);
-        }else{
-            JOptionPane.showMessageDialog(null, "Todos os Aulos da Escola Já Estão Cadastrados!");
-        }
+
     }
 
     private void cadastrar() {
@@ -107,16 +85,17 @@ public class SelecionarAlunos extends javax.swing.JInternalFrame {
                     idCursoAluno++;
                 }
                 idAluno = entity3.idCodAluno((String) tabelaAluno.getModel().getValueAt(tabelaAluno.getSelectedRow(), 0));
-                                
-                cursoAluno = new CursoAluno(idCursoAluno);                
+
+                cursoAluno = new CursoAluno(idCursoAluno);
                 cursoAluno.setIdAluno(idAluno);
                 cursoAluno.setIdCurso(idCurso);
 
                 entity.save(cursoAluno);
             }
         }
-
+        
         JOptionPane.showMessageDialog(null, "Alunos Cadastrados");
+        
         this.dispose();
     }
 

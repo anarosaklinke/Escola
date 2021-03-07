@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CursoServiceImpl implements CursoService {
 
-    private CursoDAO cursoDAO;
+    private final CursoDAO cursoDAO;
 
     public CursoServiceImpl() {
         this.cursoDAO = DaoFactory.getCursoDAO();

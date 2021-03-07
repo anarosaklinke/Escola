@@ -20,4 +20,8 @@ public class ServiceFactory {
     public static CursoService getCursoService() {
         return new CursoServiceImpl();
     }
+    
+    public static CursoAlunoService getCursoAlunoService() {
+        return new CursoAlunoServiceImpl();
+    }
 }

@@ -166,7 +166,7 @@ public class ListaCurso extends javax.swing.JInternalFrame {
 
         Atualizar1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Atualizar1.setForeground(new java.awt.Color(0, 0, 204));
-        Atualizar1.setText("Verificar Ementa");
+        Atualizar1.setText("Consultar Curso");
         Atualizar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Atualizar1ActionPerformed(evt);

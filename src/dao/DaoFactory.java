@@ -20,5 +20,9 @@ public class DaoFactory {
     public static CursoDAO getCursoDAO() {
         return new CursoDAOImpl();
     }
+    
+    public static CursoAlunoDAO getCursoAlunoDAO() {
+        return new CursoAlunoDAOImpl();
+    }
 
 }

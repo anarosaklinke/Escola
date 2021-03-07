@@ -7,7 +7,7 @@ import java.util.List;
 
 public class AlunoServiceImpl implements AlunoService {
 
-    private AlunoDAO alunoDAO;
+    private final AlunoDAO alunoDAO;
 
     public AlunoServiceImpl() {
         this.alunoDAO = DaoFactory.getAlunoDAO();

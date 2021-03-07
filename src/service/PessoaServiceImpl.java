@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PessoaServiceImpl implements PessoaService {
 
-    private PessoaDAO pessoaDAO;
+    private final PessoaDAO pessoaDAO;
 
     public PessoaServiceImpl() {
         this.pessoaDAO = DaoFactory.getPessoaDAO();
