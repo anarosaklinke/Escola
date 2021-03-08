@@ -93,28 +93,29 @@ public class ConsultarCurso extends javax.swing.JInternalFrame {
         long idCursoAluno, idCurso, idAluno;
 
         idCurso = entity2.idCodCurso(codcurso);
+        if (tabelaAluno.getSelectedRow() != -1) {
+            for (int i = 0; i < tabelaAluno.getRowCount(); i++) {
+                if ((Boolean) tabelaAluno.getModel().getValueAt(i, 2)) {
 
-        for (int i = 0; i < tabelaAluno.getRowCount(); i++) {
-            if ((Boolean) tabelaAluno.getModel().getValueAt(i, 2)) {
+                    idCursoAluno = entity.recuperaUltimoId();
+                    if (idCursoAluno == -1) {
+                        idCursoAluno = 1;
+                    } else {
+                        idCursoAluno++;
+                    }
+                    idAluno = entity3.idCodAluno((String) tabelaAluno.getModel().getValueAt(tabelaAluno.getSelectedRow(), 0));
 
-                idCursoAluno = entity.recuperaUltimoId();
-                if (idCursoAluno == -1) {
-                    idCursoAluno = 1;
-                } else {
-                    idCursoAluno++;
+                    cursoAluno = new CursoAluno(idCursoAluno);
+                    cursoAluno.setIdAluno(idAluno);
+                    cursoAluno.setIdCurso(idCurso);
+
+                    entity.exclui(idAluno, idCurso);
                 }
-                idAluno = entity3.idCodAluno((String) tabelaAluno.getModel().getValueAt(tabelaAluno.getSelectedRow(), 0));
-
-                cursoAluno = new CursoAluno(idCursoAluno);
-                cursoAluno.setIdAluno(idAluno);
-                cursoAluno.setIdCurso(idCurso);
-
-                entity.exclui(idAluno, idCurso);
             }
-        }
 
-        JOptionPane.showMessageDialog(null, "Alunos Excluidos do Curso");
-        exibir();
+            JOptionPane.showMessageDialog(null, "Alunos Excluidos do Curso");
+            exibir();
+        }
     }
 
     private void cadastrar() {
