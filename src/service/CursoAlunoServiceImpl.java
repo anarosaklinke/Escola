@@ -65,6 +65,15 @@ public class CursoAlunoServiceImpl implements CursoAlunoService {
         }
         return b;
     }
+    
+    @Override
+    public List<CursoAluno> recuperaAluno(long idaluno) {
+        List<CursoAluno> b = null;
+            if (idaluno > 0) {
+                b = this.CursoAlunoDAO.recuperaAluno(idaluno);
+        }
+        return b;
+    }
 
     @Override
     public long recuperaUltimoId() {

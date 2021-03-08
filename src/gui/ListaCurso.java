@@ -9,7 +9,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import model.Curso;
 import model.CursoAluno;
-import service.AlunoService;
 import service.CursoAlunoService;
 import service.CursoService;
 import service.ServiceFactory;

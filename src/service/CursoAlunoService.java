@@ -12,6 +12,8 @@ public interface CursoAlunoService {
     long recuperaUltimoId();
 
     List<CursoAluno> recuperaCursoAluno(long idcurso);
+    
+    List<CursoAluno> recuperaAluno(long idaluno);
 
     boolean verificaAluno(long idaluno, long idcurso);
 

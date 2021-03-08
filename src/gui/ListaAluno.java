@@ -6,11 +6,12 @@
 package gui;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import model.Aluno;
+import model.CursoAluno;
 import service.AlunoService;
+import service.CursoAlunoService;
 import service.ServiceFactory;
-
-
 
 public class ListaAluno extends javax.swing.JInternalFrame {
 
@@ -36,25 +37,19 @@ public class ListaAluno extends javax.swing.JInternalFrame {
             a = aluno.get(i);
             dados[i][1] = a.getNome();
             dados[i][0] = a.getCodAluno();
-                    }
+        }
         tabelaAluno = new javax.swing.JTable();
 
         tabelaAluno.setModel(new javax.swing.table.DefaultTableModel(
                 dados,
                 new String[]{
-                    "Código do Aluno", "Nome" 
+                    "Código do Aluno", "Nome"
                 }
         ));
-        
-        
-        
 
         jScrollPane2.setViewportView(tabelaAluno);
 
     }
-
-
-
 
     private void cadastrar() {
 
@@ -66,7 +61,7 @@ public class ListaAluno extends javax.swing.JInternalFrame {
     private void alteraAluno() {
         if (tabelaAluno.getSelectedRow() != -1) {
             AlteraAluno alterar = new AlteraAluno();
-            
+
             alterar.codAlunoOld.setText((String) tabelaAluno.getModel().getValueAt(tabelaAluno.getSelectedRow(), 0));
             alterar.codAluno.setText((String) tabelaAluno.getModel().getValueAt(tabelaAluno.getSelectedRow(), 0));
             alterar.nome.setText((String) tabelaAluno.getModel().getValueAt(tabelaAluno.getSelectedRow(), 1));
@@ -77,11 +72,26 @@ public class ListaAluno extends javax.swing.JInternalFrame {
     }
 
     private void excluirUsuario() {
-        if (tabelaAluno.getSelectedRow() != -1) {
-            ExcluirAluno exclui = new ExcluirAluno();
-            exclui.codAluno.setText((String) tabelaAluno.getModel().getValueAt(tabelaAluno.getSelectedRow(), 0));
-            getParent().add(exclui);
-            exclui.setVisible(true);
+
+        CursoAlunoService entity = ServiceFactory.getCursoAlunoService();
+        AlunoService entity2 = ServiceFactory.getAlunoService();
+
+        String codAluno = (String) tabelaAluno.getModel().getValueAt(tabelaAluno.getSelectedRow(), 0);
+
+        long idCurso = entity2.idCodAluno(codAluno);
+
+        List<CursoAluno> aluno = entity.recuperaAluno(idCurso);
+
+        if (aluno.isEmpty()) {
+
+            if (tabelaAluno.getSelectedRow() != -1) {
+                ExcluirAluno exclui = new ExcluirAluno();
+                exclui.codAluno.setText(codAluno);
+                getParent().add(exclui);
+                exclui.setVisible(true);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Aluno Cadastrado em Cursos - Não Pode Ser Excluido");
         }
     }
 

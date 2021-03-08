@@ -197,6 +197,38 @@ public class CursoAlunoDAOImpl implements CursoAlunoDAO {
         return b;
     }
     
+    @Override
+    public List<CursoAluno> recuperaAluno(long idaluno) {
+        Connection con = null;
+        PreparedStatement pstm = null;
+        ResultSet res = null;
+        List<CursoAluno> temp = new ArrayList<CursoAluno>();
+        con = FabricaConexao.getConexaoSchema();
+        if (con != null) {
+            try {
+
+                pstm = con.prepareStatement(RECUPERA_ALUNO);
+                pstm.setLong(1, idaluno);
+                
+                res = pstm.executeQuery();
+
+                CursoAluno cursoAluno;
+                while (res != null && res.next()) {
+                    cursoAluno = new CursoAluno(res.getLong("idcurso_aluno"));
+                    cursoAluno.setIdCurso(res.getLong("Curso_idCurso"));
+                    cursoAluno.setIdAluno(res.getLong("Aluno_idAluno"));
+
+                    temp.add(cursoAluno);
+                }
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Message: " + ex);
+            }
+        }
+
+        return temp;
+
+    }
 
 
 

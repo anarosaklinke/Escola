@@ -15,6 +15,9 @@ public interface CursoAlunoDAO {
 
     final String RECUPERA = "SELECT * FROM curso_aluno WHERE "
             + " Curso_idCurso = ? ";
+    
+    final String RECUPERA_ALUNO = "SELECT * FROM curso_aluno WHERE "
+            + " Aluno_idAluno = ? ";
 
     final String VERIFICA_ALUNO = "SELECT * FROM curso_aluno WHERE "
             + " Aluno_idAluno = ? "
@@ -35,6 +38,8 @@ public interface CursoAlunoDAO {
     public long recuperaUltimoId();
 
     public List<CursoAluno> recuperaCursoAluno(long idcurso);
+    
+    public List<CursoAluno> recuperaAluno(long idaluno);
 
     public boolean verificaAluno(long idaluno, long idcurso);
 
