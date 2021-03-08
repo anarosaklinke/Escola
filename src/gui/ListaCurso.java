@@ -191,7 +191,7 @@ public class ListaCurso extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Lista de Usuário");
+        setTitle("Lista de Cursos");
 
         Excluir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         Excluir.setForeground(new java.awt.Color(204, 0, 51));

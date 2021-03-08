@@ -147,7 +147,7 @@ public class SelecionarAlunos extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Lista de Usuário");
+        setTitle("Selecionar Alunos");
 
         tabelaAluno.setEnabled(false);
         tabelaAluno.setVerifyInputWhenFocusTarget(false);

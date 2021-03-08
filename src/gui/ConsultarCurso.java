@@ -152,7 +152,7 @@ public class ConsultarCurso extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Lista de Usuário");
+        setTitle("Consultar Curso");
 
         tabelaAluno.setEnabled(false);
         tabelaAluno.setVerifyInputWhenFocusTarget(false);

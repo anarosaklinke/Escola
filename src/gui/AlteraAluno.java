@@ -109,7 +109,7 @@ public class AlteraAluno extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Atualizar Usuário");
+        setTitle("Atualizar Aluno");
 
         jLabel2.setText("Nome*");
 

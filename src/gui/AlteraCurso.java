@@ -118,7 +118,7 @@ public class AlteraCurso extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Atualizar Usuário");
+        setTitle("Atualizar Curso");
 
         jLabel2.setText("Descrição*");
 
